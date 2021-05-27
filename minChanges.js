@@ -31,6 +31,7 @@ var minChanges = function(nums, k) {
         const t2min = Math.min(...f);
         const g = new Array(MAXX).fill(t2min);
         for (let mask = 0; mask < MAXX; mask++) {
+            // entries() 方法返回一个数组的迭代对象，该对象包含数组的键值对 (key/value)。
             for (const [x, countx] of count.entries()) {
                 g[mask] = Math.min(g[mask], f[mask ^ x] - countx);
             }
