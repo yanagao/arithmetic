@@ -25,21 +25,31 @@
  * @return {number[]}
  */
 const searchRange = function(nums, target) {
-    let left = 0;
-    let right = nums.length - 1; // 7
-    let leftBorder = -1;
-    let rightBorder = -1;
-    while (left <= right) {
-        let mid = Math.floor((right - left) / 2) + left; // 3 | 1 | 2
-        if (nums[mid] >= target) {
-            right = mid - 1; // right = 2
-            leftBorder = right; // leftborder = 2
-        } else {
-            left = mid + 1; // left = 2
-            rightBorder = left; // rightborder = 2
-        }
+    let ans = [-1, -1];
+    const leftBorder = getBorder(nums, target, true);
+    const rightBorder = getBorder(nums, target, false) - 1;
+    console.log(leftBorder, rightBorder)
+    if(leftBorder <= rightBorder && nums[leftBorder] === target && nums[rightBorder] === target) {
+        return [leftBorder, rightBorder];
     }
-    return [leftBorder, rightBorder];
+    return ans;
 };
 
-console.log(searchRange([-1,0,3,3,3,5,9,12], 3));
+const getBorder = function(nums, target, isGetLeft) {
+    let left = 0;
+    let right = nums.length - 1;
+    let ans = nums.length;
+
+    while (left <= right) {
+        let mid = Math.floor((right + left) / 2);
+        if (nums[mid] > target || (isGetLeft && nums[mid] >= target)) {
+            right = mid - 1;
+            ans = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return ans;
+}
+
+console.log(searchRange([1], 1));
